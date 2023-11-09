@@ -1,0 +1,16 @@
+{
+    "name": "rostand-dev/wordify-number",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "WordifyNumber\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rostand44",
+            "email": "rostandmigan68@gmail.com"
+        }
+    ],
+    "require": {}
+}
