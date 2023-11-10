@@ -5,12 +5,15 @@ use WordifyNumber\Words\Locale\Fr;
 
 $fr = new Fr();
 
-$myfile = fopen("tests/testfile.txt", "w");
-for ($i = 0; $i <= 999; $i++) {
-    fwrite($myfile, $fr->wordsForThreeDigitGroup($i) . "\r");
-}
+//Test For wordsForThreeDigitGroup
 
-fclose($myfile);
+// $myfile = fopen("tests/testfile.txt", "w");
+// for ($i = 0; $i <= 999; $i++) {
+//     fwrite($myfile, $fr->wordsForThreeDigitGroup($i) . "\r");
+// }
+// fclose($myfile);
+// echo $fr->wordsForThreeDigitGroup(999);
+//End Test For wordsForThreeDigitGroup
 
 
-echo $fr->wordsForThreeDigitGroup(999);
+var_dump($fr->getExponents($fr->splitNumber(1524000000000)));

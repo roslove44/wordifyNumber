@@ -4,19 +4,12 @@ namespace WordifyNumber\Words\Locale;
 
 use WordifyNumber\Exception\InvalidArgumentException;
 use WordifyNumber\Language\French\FrenchDictionnary;
+use WordifyNumber\Words\Words;
 
-class Fr
+class Fr extends Words
 {
     private const MAX_DIGIT_FOR_TEEN = 19;
     private const MAX_DIGIT_FOR_DIGITS = 9;
-
-    private function splitNumber(int $number): array
-    {
-        // Cette méthode prend un nombre, 
-        // le formate en tant que chaîne avec des espaces pour les milliers,
-        // puis le divise en un tableau d'entiers.
-        return array_map('intval', explode(' ', number_format($number, 0, '', ' ')));
-    }
 
     public function wordsForThreeDigitGroup(int $number): string
     {
