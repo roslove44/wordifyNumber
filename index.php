@@ -16,4 +16,4 @@ $fr = new Fr();
 //End Test For wordsForThreeDigitGroup
 
 
-var_dump($fr->getExponents($fr->splitNumber(1524000000000)));
+var_dump($fr->getExponentsMappedToSplitNumber(0));

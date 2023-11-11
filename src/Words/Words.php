@@ -7,7 +7,8 @@ use WordifyNumber\Language\French\FrenchDictionnary;
 
 class Words
 {
-    public function splitNumber(int $number): array
+    const EXPONENT_STEP = 3;
+    private function splitNumber(int $number): array
     {
         // Cette méthode prend un nombre, 
         // le formate en tant que chaîne avec des espaces pour les milliers,
@@ -15,15 +16,24 @@ class Words
         return array_map('intval', explode(' ', number_format($number, 0, '', ' ')));
     }
 
-    public function getExponents(array $splitNumber)
+    private function getExponents(array $splitNumber): array
     {
         $length = count($splitNumber);
         $exponents = [];
+
         for ($i = 1; $i <= $length; $i++) {
-            $curentExponent = ($i - 1) * 3;
+            $curentExponent = ($i - 1) * self::EXPONENT_STEP;
             $exponents[] = $curentExponent;
         }
 
-        return $exponents;
+        return array_reverse($exponents);
+    }
+
+    public function getExponentsMappedToSplitNumber(int $number): array
+    {
+        $splitNumber = $this->splitNumber($number);
+        $exponents = $this->getExponents($splitNumber);
+
+        return array_combine($exponents, $splitNumber) ?: [];
     }
 }
