@@ -49,7 +49,7 @@ class FrenchDictionnary
     public static string $minus = 'moins';
     public static string $pluralSuffix = 's';
 
-    public static array $exponent = [
+    public static array $exponents = [
         0   => '',
         3   => 'mille',
         6   => 'million',

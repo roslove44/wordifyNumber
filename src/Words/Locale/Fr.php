@@ -11,7 +11,46 @@ class Fr extends Words
     private const MAX_DIGIT_FOR_TEEN = 19;
     private const MAX_DIGIT_FOR_DIGITS = 9;
 
-    public function wordsForThreeDigitGroup(int $number): string
+    public function toWords(int $number)
+    {
+        $result = '';
+        $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
+        $length = count($exponentsWithSplitNumber);
+        if ($length <= 1) {
+            return $result = $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
+        }
+
+        foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
+            if ($exponent < 3) {
+                $result .= $this->wordsForThreeDigitGroup($splitNumber);
+            } else {
+                if ($exponent === 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
+                    }
+                } elseif ($exponent > 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator . $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionnary::$pluralSuffix
+                            . FrenchDictionnary::$wordSeparator;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    private function wordsForExponent(int $exponent): string
+    {
+        return FrenchDictionnary::$exponents[$exponent];
+    }
+
+    private function wordsForThreeDigitGroup(int $number, $alone = false, $last = false): string
     {
         $result = "";
 
@@ -20,12 +59,12 @@ class Fr extends Words
             throw new InvalidArgumentException($number, 3, __FUNCTION__);
         }
 
-        if ($number === 0) {
+        if ($number === 0 && $alone) {
             return $result = FrenchDictionnary::$zero;
         }
 
         if ($number <= self::MAX_DIGIT_FOR_TEEN) {
-            if ($number <= self::MAX_DIGIT_FOR_DIGITS) {
+            if ($number <= self::MAX_DIGIT_FOR_DIGITS && $number !== 0) {
                 return $result .= FrenchDictionnary::$digits[$number];
             } elseif ($number >= (self::MAX_DIGIT_FOR_DIGITS + 2)) {
                 return  $result .= FrenchDictionnary::$teens[$number];
@@ -38,20 +77,26 @@ class Fr extends Words
         $ten = (int) $stringNumber[1];
         $unit = (int) $stringNumber[2];
 
-        $result .= $this->proccessHundred($hundred);
+        if (!$ten && !$unit) {
+            $last = true;
+        }
+
+        $result .= $this->proccessHundred($hundred, $last);
         $result .= $this->proccessTensAndUnits($ten, $unit);
 
         return trim($result);
     }
 
-    private function proccessHundred(int $hundred): string
+    private function proccessHundred(int $hundred, $last = false): string
     {
         $hundredToWords = '';
         if ($hundred) {
             if ($hundred === 1) {
                 $hundredToWords .= FrenchDictionnary::$tens[100];
-            } else {
+            } elseif ($hundred > 1 && $last) {
                 $hundredToWords .= FrenchDictionnary::$digits[$hundred] . FrenchDictionnary::$wordSeparator . FrenchDictionnary::$tens[100] . FrenchDictionnary::$pluralSuffix;
+            } elseif ($hundred > 1 && !$last) {
+                $hundredToWords .= FrenchDictionnary::$digits[$hundred] . FrenchDictionnary::$wordSeparator . FrenchDictionnary::$tens[100];
             }
         }
 

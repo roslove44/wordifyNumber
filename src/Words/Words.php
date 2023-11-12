@@ -29,7 +29,7 @@ class Words
         return array_reverse($exponents);
     }
 
-    public function getExponentsMappedToSplitNumber(int $number): array
+    protected function getExponentsMappedToSplitNumber(int $number): array
     {
         $splitNumber = $this->splitNumber($number);
         $exponents = $this->getExponents($splitNumber);
