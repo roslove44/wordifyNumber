@@ -1,6 +1,6 @@
 <?php
 
-namespace WordifyNumber\Language\French;
+namespace WordifyNumber\Dictionary\Language\French;
 
 class FrenchDictionary
 {

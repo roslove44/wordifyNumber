@@ -3,7 +3,7 @@
 namespace WordifyNumber\Words\Locale;
 
 use WordifyNumber\Exception\InvalidArgumentException;
-use WordifyNumber\Language\French\FrenchDictionary;
+use WordifyNumber\Dictionary\Language\French\FrenchDictionary;
 use WordifyNumber\Words\Words;
 
 class Fr extends Words
