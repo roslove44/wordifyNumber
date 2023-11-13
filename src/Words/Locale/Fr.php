@@ -3,7 +3,7 @@
 namespace WordifyNumber\Words\Locale;
 
 use WordifyNumber\Exception\InvalidArgumentException;
-use WordifyNumber\Language\French\FrenchDictionnary;
+use WordifyNumber\Language\French\FrenchDictionary;
 use WordifyNumber\Words\Words;
 
 class Fr extends Words
@@ -11,43 +11,9 @@ class Fr extends Words
     private const MAX_DIGIT_FOR_TEEN = 19;
     private const MAX_DIGIT_FOR_DIGITS = 9;
 
-    public function toWords(int $number)
-    {
-        $result = '';
-        $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
-        $length = count($exponentsWithSplitNumber);
-        if ($length <= 1) {
-            return $result = $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
-        }
-
-        foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
-            if ($exponent < 3) {
-                $result .= $this->wordsForThreeDigitGroup($splitNumber);
-            } else {
-                if ($exponent === 3) {
-                    if ($splitNumber === 1) {
-                        $result .= $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
-                    } elseif ($splitNumber > 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator .
-                            $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
-                    }
-                } elseif ($exponent > 3) {
-                    if ($splitNumber === 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator . $this->wordsForExponent($exponent) . FrenchDictionnary::$wordSeparator;
-                    } elseif ($splitNumber > 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionnary::$wordSeparator .
-                            $this->wordsForExponent($exponent) . FrenchDictionnary::$pluralSuffix
-                            . FrenchDictionnary::$wordSeparator;
-                    }
-                }
-            }
-        }
-        return $result;
-    }
-
     private function wordsForExponent(int $exponent): string
     {
-        return FrenchDictionnary::$exponents[$exponent];
+        return FrenchDictionary::$exponents[$exponent];
     }
 
     private function wordsForThreeDigitGroup(int $number, $alone = false, $last = false): string
@@ -60,14 +26,14 @@ class Fr extends Words
         }
 
         if ($number === 0 && $alone) {
-            return $result = FrenchDictionnary::$zero;
+            return $result = FrenchDictionary::$zero;
         }
 
         if ($number <= self::MAX_DIGIT_FOR_TEEN) {
             if ($number <= self::MAX_DIGIT_FOR_DIGITS && $number !== 0) {
-                return $result .= FrenchDictionnary::$digits[$number];
+                return $result .= FrenchDictionary::$digits[$number];
             } elseif ($number >= (self::MAX_DIGIT_FOR_DIGITS + 2)) {
-                return  $result .= FrenchDictionnary::$teens[$number];
+                return  $result .= FrenchDictionary::$teens[$number];
             }
         }
 
@@ -87,16 +53,16 @@ class Fr extends Words
         return trim($result);
     }
 
-    private function proccessHundred(int $hundred, $last = false): string
+    private function proccessHundred(int $hundred, $last): string
     {
         $hundredToWords = '';
         if ($hundred) {
             if ($hundred === 1) {
-                $hundredToWords .= FrenchDictionnary::$tens[100];
+                $hundredToWords .= FrenchDictionary::$tens[100];
             } elseif ($hundred > 1 && $last) {
-                $hundredToWords .= FrenchDictionnary::$digits[$hundred] . FrenchDictionnary::$wordSeparator . FrenchDictionnary::$tens[100] . FrenchDictionnary::$pluralSuffix;
+                $hundredToWords .= FrenchDictionary::$digits[$hundred] . FrenchDictionary::$wordSeparator . FrenchDictionary::$tens[100] . FrenchDictionary::$pluralSuffix;
             } elseif ($hundred > 1 && !$last) {
-                $hundredToWords .= FrenchDictionnary::$digits[$hundred] . FrenchDictionnary::$wordSeparator . FrenchDictionnary::$tens[100];
+                $hundredToWords .= FrenchDictionary::$digits[$hundred] . FrenchDictionary::$wordSeparator . FrenchDictionary::$tens[100];
             }
         }
 
@@ -109,35 +75,69 @@ class Fr extends Words
         if ($ten) {
             if ($unit !== 0) {
                 if ($ten === 1 && $unit >= 1) {
-                    $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . FrenchDictionnary::$teens[$ten . $unit];
+                    $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . FrenchDictionary::$teens[$ten . $unit];
                 } elseif ($ten > 1 && $ten !== 7 && $ten !== 9) {
-                    $tenWords = ($ten === 8) ? substr(FrenchDictionnary::$tens[$ten * 10], 0, -1) : FrenchDictionnary::$tens[$ten * 10];
+                    $tenWords = ($ten === 8) ? substr(FrenchDictionary::$tens[$ten * 10], 0, -1) : FrenchDictionary::$tens[$ten * 10];
                     if ($unit === 1) {
-                        $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . $tenWords .
-                            FrenchDictionnary::$dash . FrenchDictionnary::$and . FrenchDictionnary::$dash .
-                            FrenchDictionnary::$digits[$unit];
+                        $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . $tenWords .
+                            FrenchDictionary::$dash . FrenchDictionary::$and . FrenchDictionary::$dash .
+                            FrenchDictionary::$digits[$unit];
                     } else {
-                        $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . $tenWords .
-                            FrenchDictionnary::$dash .
-                            FrenchDictionnary::$digits[$unit];
+                        $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . $tenWords .
+                            FrenchDictionary::$dash .
+                            FrenchDictionary::$digits[$unit];
                     }
                 } elseif ($ten === 7 || $ten === 9) {
-                    $pred = ($ten === 9) ? substr(FrenchDictionnary::$tens[($ten - 1) * 10], 0, -1) : FrenchDictionnary::$tens[($ten - 1) * 10];
+                    $pred = ($ten === 9) ? substr(FrenchDictionary::$tens[($ten - 1) * 10], 0, -1) : FrenchDictionary::$tens[($ten - 1) * 10];
                     if ($unit === 1) {
-                        $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . $pred .
-                            FrenchDictionnary::$dash . FrenchDictionnary::$and . FrenchDictionnary::$dash .
-                            FrenchDictionnary::$teens[10 + $unit];
+                        $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . $pred .
+                            FrenchDictionary::$dash . FrenchDictionary::$and . FrenchDictionary::$dash .
+                            FrenchDictionary::$teens[10 + $unit];
                     } elseif ($unit > 1) {
-                        $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . $pred .
-                            FrenchDictionnary::$dash . FrenchDictionnary::$teens[10 + $unit];
+                        $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . $pred .
+                            FrenchDictionary::$dash . FrenchDictionary::$teens[10 + $unit];
                     }
                 }
             } else {
-                $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . FrenchDictionnary::$tens[$ten * 10];
+                $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . FrenchDictionary::$tens[$ten * 10];
             }
         } elseif ($unit) {
-            $tenAndUnitsToWords .= FrenchDictionnary::$wordSeparator . FrenchDictionnary::$digits[$unit];
+            $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . FrenchDictionary::$digits[$unit];
         }
         return $tenAndUnitsToWords;
+    }
+
+    public function toWords(int $number)
+    {
+        $result = '';
+        $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
+        $length = count($exponentsWithSplitNumber);
+        if ($length <= 1) {
+            return $result = $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
+        }
+
+        foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
+            if ($exponent < 3) {
+                $result .= $this->wordsForThreeDigitGroup($splitNumber);
+            } else {
+                if ($exponent === 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    }
+                } elseif ($exponent > 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator . $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionary::$pluralSuffix
+                            . FrenchDictionary::$wordSeparator;
+                    }
+                }
+            }
+        }
+        return $result;
     }
 }

@@ -2,9 +2,6 @@
 
 namespace WordifyNumber\Words;
 
-use WordifyNumber\Exception\InvalidArgumentException;
-use WordifyNumber\Language\French\FrenchDictionnary;
-
 class Words
 {
     const EXPONENT_STEP = 3;

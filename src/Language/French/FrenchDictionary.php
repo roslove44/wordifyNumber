@@ -2,7 +2,7 @@
 
 namespace WordifyNumber\Language\French;
 
-class FrenchDictionnary
+class FrenchDictionary
 {
     public static array $digits = [
         1 => 'un',
