@@ -38,4 +38,4 @@ fclose($myfile);
 //End Test For wordsForThreeDigitGroup
 
 
-var_dump($fr->toWords(201));
+var_dump($fr->toWords(1));

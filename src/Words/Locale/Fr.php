@@ -110,10 +110,16 @@ class Fr extends Words
     public function toWords(int $number)
     {
         $result = '';
+
+        if ($number < 0) {
+            $result .= FrenchDictionary::$minus . FrenchDictionary::$wordSeparator;
+            $number = abs($number);
+        }
+
         $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
         $length = count($exponentsWithSplitNumber);
         if ($length <= 1) {
-            return $result = $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
+            return $result .= $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
         }
 
         foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
