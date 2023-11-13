@@ -2,35 +2,35 @@
 
 namespace WordifyNumber\Words;
 
+use WordifyNumber\Exception\WordifyNumberException;
+
 class Words
 {
-    const EXPONENT_STEP = 3;
-    private function splitNumber(int $number): array
+    public function transformToWords(int $number, string $locale): string
     {
-        // Cette méthode prend un nombre, 
-        // le formate en tant que chaîne avec des espaces pour les milliers,
-        // puis le divise en un tableau d'entiers.
-        return array_map('intval', explode(' ', number_format($number, 0, '', ' ')));
+        $localeClassName = $this->resolveLocaleClassName($locale);
+        $transformer = new $localeClassName();
+
+        return trim($transformer->toWords($number));
     }
 
-    private function getExponents(array $splitNumber): array
+    private function resolveLocaleClassName(string $locale): string
     {
-        $length = count($splitNumber);
-        $exponents = [];
+        $normalizedLocale = implode('\\', array_map(
+            static fn ($element) => ucfirst(strtolower($element)),
+            explode('_', $locale)
+        ));
 
-        for ($i = 1; $i <= $length; $i++) {
-            $curentExponent = ($i - 1) * self::EXPONENT_STEP;
-            $exponents[] = $curentExponent;
+        if (empty($normalizedLocale)) {
+            throw new WordifyNumberException('Invalid locale string');
         }
 
-        return array_reverse($exponents);
-    }
+        $class = 'WordifyNumber\\Words\\Locale\\' . $normalizedLocale;
 
-    protected function getExponentsMappedToSplitNumber(int $number): array
-    {
-        $splitNumber = $this->splitNumber($number);
-        $exponents = $this->getExponents($splitNumber);
+        if (!class_exists($class)) {
+            throw new WordifyNumberException(sprintf('Unable to load locale class for %s', $locale));
+        }
 
-        return array_combine($exponents, $splitNumber) ?: [];
+        return $class;
     }
 }

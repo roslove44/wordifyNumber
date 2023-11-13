@@ -4,9 +4,8 @@ namespace WordifyNumber\Words\Locale;
 
 use WordifyNumber\Exception\InvalidArgumentException;
 use WordifyNumber\Dictionary\Language\French\FrenchDictionary;
-use WordifyNumber\Words\Words;
 
-class Fr extends Words
+class Fr extends Legacy
 {
     private const MAX_DIGIT_FOR_TEEN = 19;
     private const MAX_DIGIT_FOR_DIGITS = 9;

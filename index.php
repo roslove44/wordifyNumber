@@ -1,7 +1,9 @@
 <?php
+
+use WordifyNumber\WordifyNumber;
+
 require './vendor/autoload.php';
 
-use WordifyNumber\Words\Locale\Fr;
 
 $numbersToTest = [
     123,
@@ -26,16 +28,15 @@ $numbersToTest = [
     10000000,
 ];
 
-$fr = new Fr();
-
 //Test For wordsForThreeDigitGroup
 
-$myfile = fopen("tests/testfile.txt", "w");
-for ($i = 0; $i < count($numbersToTest); $i++) {
-    fwrite($myfile, $fr->toWords($numbersToTest[$i]) . "\r");
-}
-fclose($myfile);
+// $myfile = fopen("tests/testfile.txt", "w");
+// for ($i = 0; $i < count($numbersToTest); $i++) {
+//     fwrite($myfile, $fr->toWords($numbersToTest[$i]) . "\r");
+// }
+// fclose($myfile);
 //End Test For wordsForThreeDigitGroup
 
+$wordify = new WordifyNumber();
 
-var_dump($fr->toWords(1));
+echo $wordify::transformNumber('fr', 1);
