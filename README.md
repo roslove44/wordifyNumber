@@ -31,7 +31,7 @@ echo $wordify::transformNumber(12345, 'fr'); // Affiche "douze mille trois cent 
 ```  
   ### Currency Transformer 
 ```php
-echo $wordify::transformNumber(12345, 'XOF', 'fr); // Affiche "douze mille trois cent quarante-cinq"
+echo $wordify::transformNumber(12345, 'XOF', 'fr); // Affiche "douze mille trois cent quarante-cinq francs CFA"
 ```  
 ## Contribuer
 [Liste des contributeurs](https://github.com/roslove44/wordifyNumber/graphs/contributors).
