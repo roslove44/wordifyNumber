@@ -30,4 +30,4 @@ $numbersToTest = [
 
 $wordify = new WordifyNumber();
 
-echo $wordify::transformCurrency(1589);
+echo $wordify::transformCurrency(10889777);
