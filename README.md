@@ -6,7 +6,7 @@ WordifyNumber est une bibliothèque PHP permettant de convertir des nombres en m
 
 Ce projet a été initialement conçu à des fins personnelles dans le contexte de la création d'un ERP (Enterprise Resource Planning) destiné aux entreprises, avec un accent particulier sur la fonction de facturation automatisée. L'une des fonctionnalités clés de cette automatisation est la conversion des montants numériques en lettres pour une présentation plus conviviale sur les documents de facturation.
 
-WordifyNumber a été créé dans l'optique de fournir une solution autonome et légère pour cette tâche spécifique, sans dépendre d'autres bibliothèques externes. L'objectif est de permettre une intégration facile dans le projet ERP, offrant ainsi une fonction de conversion de nombres en lettres sans avoir à s'appuyer sur des solutions tierces. Cela garantit une plus grande maîtrise et personnalisation de la logique de conversion, répondant ainsi précisément aux besoins du système de facturation automatisée.
+**WordifyNumber** a été créé dans l'optique de fournir une solution autonome et légère pour cette tâche spécifique, sans dépendre d'autres bibliothèques externes. L'objectif est de permettre une intégration facile dans le projet ERP, offrant ainsi une fonction de conversion de nombres en lettres sans avoir à s'appuyer sur des solutions tierces. Cela garantit une plus grande maîtrise et personnalisation de la logique de conversion, répondant ainsi précisément aux besoins du système de facturation automatisée.
 
 Wordify s'inspire d'autres projets plus complets du même domaine, tels que kwn/number-to-words.
 
