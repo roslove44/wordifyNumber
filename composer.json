@@ -3,7 +3,7 @@
     "description": "This library converts numbers to their word representation (123 -> one hundred twenty three).",
     "type": "library",
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.1"
     },
     "license": "MIT",
     "autoload": {
