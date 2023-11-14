@@ -28,15 +28,6 @@ $numbersToTest = [
     10000000,
 ];
 
-//Test For wordsForThreeDigitGroup
-
-// $myfile = fopen("tests/testfile.txt", "w");
-// for ($i = 0; $i < count($numbersToTest); $i++) {
-//     fwrite($myfile, $fr->toWords($numbersToTest[$i]) . "\r");
-// }
-// fclose($myfile);
-//End Test For wordsForThreeDigitGroup
-
 $wordify = new WordifyNumber();
 
-echo $wordify::transformNumber('fr', 1);
+echo $wordify::transformCurrency(1589);

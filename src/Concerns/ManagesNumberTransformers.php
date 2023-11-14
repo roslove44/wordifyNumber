@@ -28,7 +28,7 @@ trait ManagesNumberTransformers
         return new $this->numberTransformers[$language]();
     }
 
-    public static function transformNumber(string $language, int $number): string
+    public static function transformNumber(int $number, string $language = 'fr'): string
     {
         return (new static())->getNumberTransformer($language)->toWords($number);
     }

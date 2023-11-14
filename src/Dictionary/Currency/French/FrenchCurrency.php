@@ -1,6 +1,6 @@
 <?php
 
-namespace WordifyNumber\Currency\French;
+namespace WordifyNumber\Dictionary\Currency\French;
 
 class FrenchCurrency
 {

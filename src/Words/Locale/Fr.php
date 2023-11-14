@@ -2,13 +2,69 @@
 
 namespace WordifyNumber\Words\Locale;
 
+use WordifyNumber\Dictionary\Currency\French\FrenchCurrency;
 use WordifyNumber\Exception\InvalidArgumentException;
 use WordifyNumber\Dictionary\Language\French\FrenchDictionary;
+use WordifyNumber\Exception\WordifyNumberException;
 
 class Fr extends Legacy
 {
     private const MAX_DIGIT_FOR_TEEN = 19;
     private const MAX_DIGIT_FOR_DIGITS = 9;
+
+
+    public function toWords(int $number): string
+    {
+        $result = '';
+
+        if ($number < 0) {
+            $result .= FrenchDictionary::$minus . FrenchDictionary::$wordSeparator;
+            $number = abs($number);
+        }
+
+        $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
+        $length = count($exponentsWithSplitNumber);
+        if ($length <= 1) {
+            return $result .= $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
+        }
+
+        foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
+            if ($exponent < 3) {
+                $result .= $this->wordsForThreeDigitGroup($splitNumber);
+            } else {
+                if ($exponent === 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    }
+                } elseif ($exponent > 3) {
+                    if ($splitNumber === 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator . $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
+                    } elseif ($splitNumber > 1) {
+                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
+                            $this->wordsForExponent($exponent) . FrenchDictionary::$pluralSuffix
+                            . FrenchDictionary::$wordSeparator;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function toCurrency(int $number, $currency)
+    {
+        if (array_key_exists($currency, FrenchCurrency::$currencyNames)) {
+            $currencyWord = FrenchCurrency::$currencyNames[$currency][0][0];
+            if ($number > 1) {
+                $currencyWord = end(FrenchCurrency::$currencyNames[$currency][0]);
+            }
+            return $result = $this->toWords($number) . FrenchDictionary::$wordSeparator . $currencyWord;
+        } else {
+            throw new WordifyNumberException(sprintf('Unable to load currency for %s', $currency));
+        }
+    }
 
     private function wordsForExponent(int $exponent): string
     {
@@ -104,45 +160,5 @@ class Fr extends Legacy
             $tenAndUnitsToWords .= FrenchDictionary::$wordSeparator . FrenchDictionary::$digits[$unit];
         }
         return $tenAndUnitsToWords;
-    }
-
-    public function toWords(int $number)
-    {
-        $result = '';
-
-        if ($number < 0) {
-            $result .= FrenchDictionary::$minus . FrenchDictionary::$wordSeparator;
-            $number = abs($number);
-        }
-
-        $exponentsWithSplitNumber = $this->getExponentsMappedToSplitNumber($number);
-        $length = count($exponentsWithSplitNumber);
-        if ($length <= 1) {
-            return $result .= $this->wordsForThreeDigitGroup($exponentsWithSplitNumber[0], true);
-        }
-
-        foreach ($exponentsWithSplitNumber as $exponent => $splitNumber) {
-            if ($exponent < 3) {
-                $result .= $this->wordsForThreeDigitGroup($splitNumber);
-            } else {
-                if ($exponent === 3) {
-                    if ($splitNumber === 1) {
-                        $result .= $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
-                    } elseif ($splitNumber > 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
-                            $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
-                    }
-                } elseif ($exponent > 3) {
-                    if ($splitNumber === 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator . $this->wordsForExponent($exponent) . FrenchDictionary::$wordSeparator;
-                    } elseif ($splitNumber > 1) {
-                        $result .= $this->wordsForThreeDigitGroup($splitNumber) . FrenchDictionary::$wordSeparator .
-                            $this->wordsForExponent($exponent) . FrenchDictionary::$pluralSuffix
-                            . FrenchDictionary::$wordSeparator;
-                    }
-                }
-            }
-        }
-        return $result;
     }
 }
