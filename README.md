@@ -20,7 +20,8 @@ composer require rostand-dev/wordify-number
 
 ## Utilisation
   Il existe deux types de transformation des nombres en mots : les nombres et les devises. Afin d'utiliser un transformateur approprié pour une langue spécifique, créez une instance de la classe NumberToWords et appelez une méthode qui crée une nouvelle instance du transformateur souhaité.
-  Le language par défaut est le français : fr ; et la devise le XOF.
+  Le language par défaut est le français : fr. 
+  La devise par défaut : le XOF.
   ### Création de l'instance
 ```php
 $wordify = new WordifyNumber();
