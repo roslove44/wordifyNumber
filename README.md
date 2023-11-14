@@ -34,7 +34,8 @@ echo $wordify::transformNumber(12345, 'fr'); // Affiche "douze mille trois cent 
 echo $wordify::transformNumber(12345, 'XOF', 'fr); // Affiche "douze mille trois cent quarante-cinq"
 ```  
 ## Contribuer
-  Liste des contributeurs : [contributeurs](https://github.com/roslove44/wordifyNumber/graphs/contributors)
+[Liste des contributeurs](https://github.com/roslove44/wordifyNumber/graphs/contributors).
+
 Si vous souhaitez contribuer à ce projet, veuillez suivre ces étapes :
 
 1. Forkez le projet
