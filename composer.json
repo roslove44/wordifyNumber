@@ -17,5 +17,7 @@
             "email": "rostandmigan68@gmail.com",
             "role": "Developer"
         }
-    ]
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
