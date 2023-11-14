@@ -12,7 +12,7 @@ Wordify s'inspire d'autres projets plus complets du même domaine, tels que kwn/
 
 ## Installation
 
-Pour utiliser cette bibliothèque dans votre projet, vous devez l'installer via Composer. Ajoutez ceci à votre fichier `composer.json` :
+Pour utiliser cette bibliothèque dans votre projet, vous devez l'installer via Composer :
 
 ```bash
 composer require rostand-dev/wordify-number
