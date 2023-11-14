@@ -1,7 +1,7 @@
 {
     "name": "rostand-dev/wordify-number",
     "description": "This library converts numbers to their word representation (123 -> one hundred twenty three).",
-    "type": "project",
+    "type": "library",
     "require": {
         "php": ">=8.0"
     },
